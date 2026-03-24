@@ -1,49 +1,50 @@
-/* Global */
+/* GLOBAL */
 body {
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
-    background: #f5f7fa;
+    background: #f4f6f9;
     color: #333;
 }
 
-/* HERO SECTION */
+/* HERO */
 .hero {
-    background: linear-gradient(135deg, #1e3c72, #2a5298);
-    color: white;
+    height: 280px;
+    background: linear-gradient(135deg, #0f2027, #2c5364);
 
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
 
-    height: 260px;
+.hero-content {
     text-align: center;
+    color: white;
 }
 
 .hero h1 {
+    font-size: 42px;
     margin: 0;
-    font-size: 38px;
-    font-weight: bold;
     letter-spacing: 1px;
 }
 
 .hero p {
-    margin-top: 10px;
-    font-size: 16px;
+    margin-top: 12px;
+    font-size: 18px;
     opacity: 0.9;
 }
 
-/* SECTIONS */
-section {
-    padding: 30px;
-    margin: 25px;
+/* CARD SECTIONS */
+.card {
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+    margin: 25px;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
 
+/* HEADINGS */
 h2 {
-    color: #1e3c72;
+    color: #2c5364;
     margin-bottom: 15px;
 }
 
@@ -54,21 +55,19 @@ h2 {
     gap: 20px;
 }
 
-/* PROJECT CARD */
 .project {
     background: #ffffff;
-    border-radius: 12px;
     padding: 20px;
+    border-radius: 12px;
 
-    border-left: 5px solid #2a5298;
+    border-left: 5px solid #2c5364;
 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     transition: 0.3s;
 }
 
 .project:hover {
     transform: translateY(-6px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
 /* SKILLS */
@@ -79,17 +78,16 @@ h2 {
 }
 
 .skills li {
-    background: linear-gradient(135deg, #2a5298, #1e3c72);
+    list-style: none;
+    background: #2c5364;
     color: white;
     padding: 8px 14px;
     border-radius: 20px;
-    list-style: none;
-    font-size: 14px;
 }
 
 /* LINKS */
 a {
-    color: #2a5298;
+    color: #2c5364;
     font-weight: 500;
     text-decoration: none;
 }
@@ -103,5 +101,4 @@ footer {
     text-align: center;
     padding: 15px;
     background: #e0e0e0;
-    margin-top: 20px;
 }
