@@ -1,49 +1,77 @@
+/* Global */
 body {
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
-    background: #f0f2f5;
+    background: #f5f7fa;
     color: #333;
 }
 
-/* Hero Section */
+/* HERO SECTION */
 .hero {
-    background: linear-gradient(135deg, #0077b6, #00b4d8);
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
     color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    height: 260px;
     text-align: center;
-    padding: 50px 20px;
 }
 
 .hero h1 {
     margin: 0;
-    font-size: 32px;
+    font-size: 38px;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
-/* Sections */
+.hero p {
+    margin-top: 10px;
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* SECTIONS */
 section {
     padding: 30px;
-    margin: 20px;
+    margin: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.05);
 }
 
-/* Projects Grid */
+h2 {
+    color: #1e3c72;
+    margin-bottom: 15px;
+}
+
+/* PROJECT GRID */
 .projects-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
 }
 
+/* PROJECT CARD */
 .project {
-    background: white;
+    background: #ffffff;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+    border-left: 5px solid #2a5298;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     transition: 0.3s;
 }
 
 .project:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
-/* Skills */
+/* SKILLS */
 .skills {
     display: flex;
     flex-wrap: wrap;
@@ -51,16 +79,18 @@ section {
 }
 
 .skills li {
-    background: #0077b6;
+    background: linear-gradient(135deg, #2a5298, #1e3c72);
     color: white;
-    padding: 8px 12px;
+    padding: 8px 14px;
     border-radius: 20px;
     list-style: none;
+    font-size: 14px;
 }
 
-/* Links */
+/* LINKS */
 a {
-    color: #0077b6;
+    color: #2a5298;
+    font-weight: 500;
     text-decoration: none;
 }
 
@@ -68,9 +98,10 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Footer */
+/* FOOTER */
 footer {
     text-align: center;
     padding: 15px;
-    background: #ddd;
+    background: #e0e0e0;
+    margin-top: 20px;
 }
