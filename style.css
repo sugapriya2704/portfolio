@@ -1,4 +1,3 @@
-/* GLOBAL */
 body {
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
@@ -6,11 +5,10 @@ body {
     color: #333;
 }
 
-/* HERO SECTION */
+/* HERO */
 .hero {
-    height: 280px;
+    height: 320px;
     background: linear-gradient(135deg, #0f2027, #2c5364);
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,7 +19,6 @@ body {
     color: white;
 }
 
-/* PROFILE PHOTO */
 .profile-img {
     width: 130px;
     height: 130px;
@@ -31,21 +28,22 @@ body {
     margin-bottom: 15px;
 }
 
-/* NAME */
 .hero h1 {
     font-size: 40px;
     margin: 0;
-    letter-spacing: 1px;
 }
 
-/* SUBTITLE */
 .hero p {
     margin-top: 10px;
-    font-size: 17px;
-    opacity: 0.9;
+    font-size: 16px;
 }
 
-/* CARD SECTIONS */
+.tagline {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+/* CARDS */
 .card {
     background: white;
     margin: 25px;
@@ -54,33 +52,46 @@ body {
     box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
 
-/* SECTION HEADINGS */
 h2 {
     color: #2c5364;
-    margin-bottom: 15px;
 }
 
-/* PROJECT GRID */
+/* PROJECTS */
 .projects-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
 }
 
-/* PROJECT CARD */
 .project {
-    background: #ffffff;
+    background: #fff;
     padding: 20px;
     border-radius: 12px;
-
     border-left: 5px solid #2c5364;
-
     transition: 0.3s;
 }
 
 .project:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+}
+
+.featured {
+    border-left: 5px solid gold;
+}
+
+/* BUTTON */
+.project a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 12px;
+    background: #2c5364;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.project a:hover {
+    background: #1e3c45;
 }
 
 /* SKILLS */
@@ -98,18 +109,7 @@ h2 {
     border-radius: 20px;
 }
 
-/* LINKS */
-a {
-    color: #2c5364;
-    font-weight: 500;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* CONTACT SECTION */
+/* CONTACT */
 .contact p {
     margin: 6px 0;
 }
