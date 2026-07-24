@@ -6,86 +6,67 @@
 <title>Sugapriya Murugesan — Embedded Systems &amp; IoT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- BOOT SEQUENCE OVERLAY -->
-<div class="boot-screen" id="bootScreen" aria-hidden="true">
-  <div class="boot-log" id="bootLog"></div>
-</div>
-
-<!-- NAV -->
 <nav class="navbar" id="navbar">
   <div class="nav-inner">
-    <a href="#top" class="logo">
-      <span class="logo-chip">SM</span>
-    </a>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <a href="#top" class="logo">Sugapriya<span>.M</span></a>
+
     <ul class="nav-links" id="navLinks">
-      <li><a href="#about" data-nav>ABOUT</a></li>
-      <li><a href="#projects" data-nav>MODULES</a></li>
-      <li><a href="#skills" data-nav>SKILLS</a></li>
-      <li><a href="#contact" data-nav>CONTACT</a></li>
+      <li><a href="#about" data-nav>About</a></li>
+      <li><a href="#projects" data-nav>Projects</a></li>
+      <li><a href="#skills" data-nav>Skills</a></li>
+      <li><a href="#contact" data-nav>Contact</a></li>
     </ul>
+
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">🌙</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </nav>
 
 <header class="hero" id="top">
-  <svg class="trace-bg" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
-    <path class="trace" d="M0 80 H220 V160 H460 V60 H700 V220 H1000" />
-    <path class="trace trace-2" d="M0 400 H180 V300 H420 V420 H650 V260 H1000" />
-    <path class="trace trace-3" d="M50 0 V140 H320 V0" />
-    <circle class="node" cx="220" cy="80" r="5"/>
-    <circle class="node" cx="460" cy="160" r="5"/>
-    <circle class="node" cx="700" cy="60" r="5"/>
-    <circle class="node" cx="180" cy="400" r="5"/>
-    <circle class="node" cx="420" cy="300" r="5"/>
-    <circle class="node" cx="650" cy="420" r="5"/>
-  </svg>
-
   <div class="hero-content">
-    <div class="chip-frame">
-      <img src="profile.jpg" alt="Sugapriya Murugesan" class="profile-img" onerror="this.style.display='none'">
+    <div class="avatar">
+      <img src="profile.jpg" alt="Sugapriya Murugesan" onerror="this.parentElement.classList.add('no-img')">
     </div>
-    <p class="eyebrow">// EMBEDDED SYSTEMS ENGINEER</p>
+    <p class="eyebrow">Embedded Systems &amp; IoT</p>
     <h1>Sugapriya Murugesan</h1>
     <p class="role-line">ECE Student &middot; Embedded Systems &middot; IoT &middot; Java</p>
-    <p class="tagline"><span id="typedText"></span><span class="cursor">|</span></p>
+    <p class="tagline"><span id="typedText">Building real-world IoT systems and data-driven solutions</span></p>
     <div class="hero-actions">
-      <a href="#projects" class="btn btn-primary">View Modules</a>
+      <a href="#projects" class="btn btn-primary">View Projects</a>
       <a href="#contact" class="btn btn-ghost">Get In Touch</a>
-    </div>
-    <div class="status-strip">
-      <span class="led"></span> SYSTEM STATUS: <span class="status-text">OPEN TO OPPORTUNITIES</span>
     </div>
   </div>
 </header>
 
 <main>
-<section class="card" id="about" data-reveal>
-  <p class="eyebrow">01 // OVERVIEW</p>
+<section class="card" id="about">
+  <p class="eyebrow">About</p>
   <h2>About Me</h2>
   <p>
     I'm an ECE student specializing in embedded systems and IoT, with additional skills in Java
     programming and data analysis. I build real-world solutions involving automation, sensor
-    integration, and data-driven decision making — treating every project like a board that has
-    to boot clean on the first try.
+    integration, and data-driven decision making.
   </p>
 </section>
 
-<section class="card" id="projects" data-reveal>
-  <p class="eyebrow">02 // BUILD LOG</p>
+<section class="card" id="projects">
+  <p class="eyebrow">Projects</p>
   <h2>Projects</h2>
   <div class="projects-container">
 
-    <div class="project featured" data-reveal>
-      <div class="project-tag">MOD‑01 <span class="pin pin-gold">FEATURED</span></div>
-      <h3>Real‑Time Public Transport Tracking System</h3>
-      <p class="stack"><b>Stack:</b> ESP8266 &middot; GPS &middot; Firebase &middot; SIM800L</p>
+    <div class="project featured">
+      <span class="badge">Featured</span>
+      <h3>Real-Time Public Transport Tracking System</h3>
+      <p class="stack">ESP8266 &middot; GPS &middot; Firebase &middot; SIM800L</p>
       <p>
         Developed a real-time bus tracking system providing live location, ETA, and SMS updates,
         improving accessibility and reducing waiting time for passengers.
@@ -93,26 +74,23 @@
       <a href="#" target="_blank" class="view-code">View Code &rarr;</a>
     </div>
 
-    <div class="project" data-reveal>
-      <div class="project-tag">MOD‑02</div>
+    <div class="project">
       <h3>IoT Weather Monitoring System</h3>
-      <p class="stack"><b>Stack:</b> Arduino &middot; DHT Sensor &middot; ESP8266 &middot; ThingSpeak</p>
+      <p class="stack">Arduino &middot; DHT Sensor &middot; ESP8266 &middot; ThingSpeak</p>
       <p>Built a system to monitor temperature and humidity in real time with cloud-based visualization.</p>
       <a href="#" target="_blank" class="view-code">View Code &rarr;</a>
     </div>
 
-    <div class="project" data-reveal>
-      <div class="project-tag">MOD‑03</div>
+    <div class="project">
       <h3>Smart Greeting Robot</h3>
-      <p class="stack"><b>Stack:</b> Arduino Uno &middot; Servo Motors</p>
+      <p class="stack">Arduino Uno &middot; Servo Motors</p>
       <p>Designed a robot capable of detecting human presence and performing automated greeting actions.</p>
       <a href="#" target="_blank" class="view-code">View Code &rarr;</a>
     </div>
 
-    <div class="project" data-reveal>
-      <div class="project-tag">MOD‑04</div>
+    <div class="project">
       <h3>Line Follower Robot</h3>
-      <p class="stack"><b>Stack:</b> Arduino Uno &middot; IR Sensors</p>
+      <p class="stack">Arduino Uno &middot; IR Sensors</p>
       <p>Developed an autonomous robot that follows a predefined path using sensor-based control.</p>
       <a href="#" target="_blank" class="view-code">View Code &rarr;</a>
     </div>
@@ -120,8 +98,8 @@
   </div>
 </section>
 
-<section class="card" id="skills" data-reveal>
-  <p class="eyebrow">03 // PINOUT</p>
+<section class="card" id="skills">
+  <p class="eyebrow">Skills</p>
   <h2>Skills</h2>
   <ul class="skills">
     <li>Embedded Systems</li>
@@ -134,27 +112,27 @@
   </ul>
 </section>
 
-<section class="card contact" id="contact" data-reveal>
-  <p class="eyebrow">04 // CONNECT</p>
+<section class="card contact" id="contact">
+  <p class="eyebrow">Contact</p>
   <h2>Contact</h2>
   <div class="contact-grid">
-    <button class="contact-row" data-copy="9342852186">
-      <span class="contact-label">PHONE</span>
+    <button class="contact-row" data-copy="9342852186" type="button">
+      <span class="contact-label">Phone</span>
       <span class="contact-value">9342852186</span>
       <span class="copy-hint">Copy</span>
     </button>
-    <button class="contact-row" data-copy="sugapriya2704@gmail.com">
-      <span class="contact-label">EMAIL</span>
+    <button class="contact-row" data-copy="sugapriya2704@gmail.com" type="button">
+      <span class="contact-label">Email</span>
       <span class="contact-value">sugapriya2704@gmail.com</span>
       <span class="copy-hint">Copy</span>
     </button>
-    <a class="contact-row" href="https://github.com/sugapriya2704" target="_blank">
-      <span class="contact-label">GITHUB</span>
+    <a class="contact-row" href="https://github.com/sugapriya2704" target="_blank" rel="noopener">
+      <span class="contact-label">GitHub</span>
       <span class="contact-value">github.com/sugapriya2704</span>
       <span class="copy-hint">Open</span>
     </a>
-    <a class="contact-row" href="https://www.linkedin.com/in/sugapriya-murugesan" target="_blank">
-      <span class="contact-label">LINKEDIN</span>
+    <a class="contact-row" href="https://www.linkedin.com/in/sugapriya-murugesan" target="_blank" rel="noopener">
+      <span class="contact-label">LinkedIn</span>
       <span class="contact-value">linkedin.com/in/sugapriya-murugesan</span>
       <span class="copy-hint">Open</span>
     </a>
@@ -164,7 +142,7 @@
 </main>
 
 <footer>
-  <p>&copy; <span id="year"></span> Sugapriya Murugesan &middot; Built with intent, one module at a time.</p>
+  <p>&copy; <span id="year"></span> Sugapriya Murugesan. All rights reserved.</p>
 </footer>
 
 <button class="to-top" id="toTop" aria-label="Back to top">&uarr;</button>
