@@ -50,8 +50,7 @@ img { max-width: 100%; }
   top: 0;
   height: var(--nav-h);
   z-index: 100;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(10px);
+  background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
 .nav-inner {
@@ -142,7 +141,7 @@ img { max-width: 100%; }
   padding: 72px 24px 56px;
   text-align: center;
   background:
-    radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--signal) 12%, transparent) 0%, transparent 60%);
+    radial-gradient(ellipse at 50% 0%, rgba(88, 196, 185, 0.10) 0%, rgba(88, 196, 185, 0) 60%);
 }
 .hero-content { max-width: 640px; margin: 0 auto; }
 
