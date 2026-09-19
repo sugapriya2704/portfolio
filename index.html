@@ -3,8 +3,268 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sugapriya Murugesan — Embedded Systems &amp; Data visualization</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sugapriya Murugesan — Embedded Systems &amp; IoT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="trace-field" aria-hidden="true"></div>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#top" class="logo">SM<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about" data-nav>About</a></li>
+      <li><a href="#experience" data-nav>Experience</a></li>
+      <li><a href="#projects" data-nav>Projects</a></li>
+      <li><a href="#skills" data-nav>Skills</a></li>
+      <li><a href="#certificates" data-nav>Certificates</a></li>
+      <li><a href="#awards" data-nav>Awards</a></li>
+      <li><a href="#contact" data-nav>Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">🌙</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-avatar">
+      <img src="profile.jpg" alt="Sugapriya Murugesan" onerror="this.parentElement.classList.add('no-img')">
+    </div>
+    <p class="kicker">Embedded systems &amp; IoT</p>
+    <h1>Sugapriya Murugesan</h1>
+    <ul class="tag-row" aria-label="Focus areas">
+      <li>ECE Student</li>
+      <li>Embedded Systems</li>
+      <li>IoT</li>
+      <li>Java</li>
+    </ul>
+    <p class="tagline"><span id="typedText">Building real-world IoT systems and data-driven solutions</span></p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">View projects</a>
+      <a href="#contact" class="btn btn-outline">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<main class="board">
+
+  <section class="pcb-section" id="about">
+    <div class="sec-head">
+      <span class="pin">U1</span>
+      <h2>About</h2>
+    </div>
+    <p class="sec-body">
+      I'm an ECE student specializing in embedded systems and data analysis, with additional skills in Java
+      programming and IoT. I build real-world solutions involving automation, sensor
+      integration, and data-driven decision making.
+    </p>
+  </section>
+
+  <section class="pcb-section" id="experience">
+    <div class="sec-head">
+      <span class="pin">U2</span>
+      <h2>Experience</h2>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="timeline-top">
+            <h3>Power BI Intern</h3>
+            <span class="timeline-date">Jan 2026 – Feb 2026</span>
+          </div>
+          <p class="timeline-org">CODTECH IT Solutions</p>
+          <ul>
+            <li>Analyzed and organized business data using Power BI, Tableau, and Excel.</li>
+            <li>Designed interactive dashboards and data visualizations to identify key trends.</li>
+            <li>Generated informative reports to support data-driven business decisions.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="timeline-top">
+            <h3>Power BI Intern</h3>
+            <span class="timeline-date">June 2025 – July 2025</span>
+          </div>
+          <p class="timeline-org">SAN Technovation Pvt. Ltd., Erode</p>
+          <ul>
+            <li>Created interactive Power BI and Tableau dashboards for business data analysis.</li>
+            <li>Cleaned, prepared, and organized datasets to improve reporting accuracy.</li>
+            <li>Collaborated with team members to enhance dashboard usability and data presentation.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="pcb-section" id="projects">
+    <div class="sec-head">
+      <span class="pin">U3</span>
+      <h2>Projects</h2>
+    </div>
+    <div class="projects-grid">
+
+      <article class="project-card">
+        <h3>Real-Time Public Transport Tracking System</h3>
+        <p>Developed a real-time bus tracking system providing live location, ETA, and SMS updates, improving accessibility and reducing waiting time for passengers.</p>
+        <ul class="stack-row">
+          <li>ESP8266</li><li>GPS</li><li>Firebase</li><li>SIM800L</li>
+        </ul>
+        <a href="https://github.com/sugapriya2704/public-transport-tracking-system" target="_blank" rel="noopener" class="src-link">Source code</a>
+      </article>
+
+      <article class="project-card">
+        <h3>IoT-Based Leak Detection &amp; Monitoring System for Industrial Compressed Air Pipelines</h3>
+        <p>Built a compressed-air pipeline monitoring system that continuously tracks line pressure using a BMP280 sensor and flags abnormal pressure drops as potential leaks, streaming live readings and alerts to the Blynk app for real-time industrial monitoring.</p>
+        <ul class="stack-row">
+          <li>ESP32</li><li>BMP280</li><li>Blynk</li>
+        </ul>
+        <a href="https://github.com/sugapriya2704/Iot-based-monitoring-and-leak-dectection-system-for-industrial-compressed-air-pipelines-" target="_blank" rel="noopener" class="src-link">Source code</a>
+      </article>
+
+      <article class="project-card">
+        <h3>IoT Weather Monitoring System</h3>
+        <p>Built a system to monitor temperature and humidity in real time with cloud-based visualization.</p>
+        <ul class="stack-row">
+          <li>Arduino</li><li>DHT Sensor</li><li>ESP8266</li><li>ThingSpeak</li>
+        </ul>
+        <a href="https://github.com/sugapriya2704/Iot-weather-monitoring-system" target="_blank" rel="noopener" class="src-link">Source code</a>
+      </article>
+
+      <article class="project-card">
+        <h3>Smart Greeting Robot</h3>
+        <p>Designed a robot capable of detecting human presence and performing automated greeting actions.</p>
+        <ul class="stack-row">
+          <li>Arduino Uno</li><li>Servo Motors</li>
+        </ul>
+        <a href="https://github.com/sugapriya2704/smart-greeting-mini-robot" target="_blank" rel="noopener" class="src-link">Source code</a>
+      </article>
+
+      <article class="project-card">
+        <h3>Line Follower Robot</h3>
+        <p>Developed an autonomous robot that follows a predefined path using sensor-based control.</p>
+        <ul class="stack-row">
+          <li>Arduino Uno</li><li>IR Sensors</li>
+        </ul>
+        <a href="https://github.com/sugapriya2704/Line-Folllower-robot" target="_blank" rel="noopener" class="src-link">Source code</a>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="pcb-section" id="skills">
+    <div class="sec-head">
+      <span class="pin">U4</span>
+      <h2>Skills</h2>
+    </div>
+    <ul class="skills-row">
+      <li>Embedded Systems</li>
+      <li>Data Visualization</li>
+      <li>C Programming</li>
+      <li>Java</li>
+      <li>IoT</li>
+      <li>HTML</li>
+      <li>SQL (Basic)</li>
+    </ul>
+  </section>
+
+  <section class="pcb-section" id="certificates">
+    <div class="sec-head">
+      <span class="pin">U5</span>
+      <h2>Certificates</h2>
+    </div>
+    <ul class="cert-list">
+      <li>
+        <span class="cert-name">Embedded System and IoT</span>
+        <span class="cert-meta">San Technovation &nbsp;·&nbsp; October 2024</span>
+      </li>
+      <li>
+        <span class="cert-name">Data Visualization Internship</span>
+        <span class="cert-meta">San Technovation &nbsp;·&nbsp; June 2025</span>
+      </li>
+      <li>
+        <span class="cert-name">9 Days Robotics Workshop</span>
+        <span class="cert-meta">Robomiracle &nbsp;·&nbsp; February 2026</span>
+      </li>
+      <li>
+        <span class="cert-name">Smart India Hackathon (SIH) 2025</span>
+        <span class="cert-meta">Velalar College of Engineering and Technology — "Multi-Functional Drone for Emergency and Industrial Uses"</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="pcb-section" id="awards">
+    <div class="sec-head">
+      <span class="pin">U6</span>
+      <h2>Award</h2>
+    </div>
+    <div class="award-row">
+      <span class="award-name">IdeaFest'25 — 3rd Prize, Project Expo</span>
+      <span class="award-meta">Velalar College of Engineering and Technology</span>
+    </div>
+  </section>
+
+  <section class="pcb-section" id="contact">
+    <div class="sec-head">
+      <span class="pin">U7</span>
+      <h2>Contact</h2>
+    </div>
+    <div class="contact-grid">
+      <button class="contact-row" data-copy="9342852186" type="button">
+        <span class="contact-label">Phone</span>
+        <span class="contact-value">9342852186</span>
+        <span class="copy-hint">copy</span>
+      </button>
+      <button class="contact-row" data-copy="sugapriya2704@gmail.com" type="button">
+        <span class="contact-label">Email</span>
+        <span class="contact-value">sugapriya2704@gmail.com</span>
+        <span class="copy-hint">copy</span>
+      </button>
+      <a class="contact-row" href="https://github.com/sugapriya2704" target="_blank" rel="noopener">
+        <span class="contact-label">GitHub</span>
+        <span class="contact-value">github.com/sugapriya2704</span>
+        <span class="copy-hint">open</span>
+      </a>
+      <a class="contact-row" href="https://www.linkedin.com/in/sugapriya-murugesan" target="_blank" rel="noopener">
+        <span class="contact-label">LinkedIn</span>
+        <span class="contact-value">linkedin.com/in/sugapriya-murugesan</span>
+        <span class="copy-hint">open</span>
+      </a>
+    </div>
+    <div class="toast" id="toast">Copied to clipboard</div>
+  </section>
+
+</main>
+
+<footer>
+  <p>&copy; <span id="year"></span> Sugapriya Murugesan. Built board by board.</p>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+<script src="script.js"></script>
+</body>
+</html>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
