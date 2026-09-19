@@ -3,25 +3,460 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sugapriya Murugesan — Embedded Systems &amp; Data visualization</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sugapriya Murugesan — Embedded Systems &amp; IoT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root {
+  --bg: #0B0E16;
+  --surface: #131826;
+  --surface-2: #171E2E;
+  --line: rgba(255,255,255,0.09);
+  --line-soft: rgba(255,255,255,0.05);
+  --cyan: #3FD3FF;
+  --magenta: #C86BFF;
+  --text: #EDF1F7;
+  --text-dim: #8D98AC;
+
+  --font-display: 'Sora', sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'Fira Code', monospace;
+
+  --nav-h: 64px;
+}
+html[data-theme="light"] {
+  --bg: #F6F7FB;
+  --surface: #FFFFFF;
+  --surface-2: #EFF2F8;
+  --line: rgba(20,25,45,0.10);
+  --line-soft: rgba(20,25,45,0.06);
+  --cyan: #0087B4;
+  --magenta: #8A2FD1;
+  --text: #161A22;
+  --text-dim: #5B6473;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  transition: background .2s ease, color .2s ease;
+}
+a { color: inherit; }
+img { max-width: 100%; }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; }
+
+.gradient-text {
+  background: linear-gradient(90deg, var(--cyan), var(--magenta));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ============ WAVEFORM DIVIDER ============ */
+.waveform {
+  width: 100%;
+  height: 28px;
+  margin: 4px 0;
+  opacity: .55;
+}
+.waveform svg { width: 100%; height: 100%; display: block; }
+
+/* ============ NAVBAR ============ */
+.navbar {
+  position: sticky;
+  top: 0;
+  height: var(--nav-h);
+  z-index: 100;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 26px;
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.nav-links a {
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--text-dim);
+  position: relative;
+  padding-bottom: 4px;
+  transition: color .2s ease;
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--magenta));
+  transition: width .2s ease;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--text); }
+.nav-links a.active::after, .nav-links a:hover::after { width: 100%; }
+
+.nav-right { display: flex; align-items: center; gap: 10px; }
+.theme-toggle {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--text);
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+.nav-toggle span {
+  width: 22px; height: 2px;
+  background: var(--text);
+  display: block;
+  transition: transform .25s ease, opacity .25s ease;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============ HERO ============ */
+.hero {
+  padding: 84px 24px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before, .hero::after {
+  content: "";
+  position: absolute;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: .28;
+  z-index: 0;
+}
+.hero::before { background: var(--cyan); top: -120px; left: -80px; }
+.hero::after { background: var(--magenta); top: -60px; right: -100px; }
+.hero-inner { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
+
+.hero-avatar {
+  width: 108px; height: 108px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--cyan), var(--magenta));
+}
+.hero-avatar-inner {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-avatar.no-img .hero-avatar-inner::before {
+  content: "SM";
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--cyan);
+}
+
+.kicker { font-size: 13.5px; color: var(--text-dim); margin: 0 0 10px; }
+.hero h1 {
+  font-size: clamp(30px, 5vw, 46px);
+  font-weight: 800;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+
+.tag-row {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  list-style: none; margin: 0 0 22px; padding: 0;
+}
+.tag-row li {
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 6px 13px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+}
+.tag-row li:nth-child(odd) { border-color: color-mix(in srgb, var(--cyan) 45%, var(--line)); }
+.tag-row li:nth-child(even) { border-color: color-mix(in srgb, var(--magenta) 45%, var(--line)); }
+
+.tagline {
+  font-family: var(--font-mono);
+  font-size: 14.5px;
+  color: var(--text);
+  min-height: 1.4em;
+  margin: 0 0 30px;
+}
+.tagline #typedText::after {
+  content: "";
+  display: inline-block;
+  width: 2px; height: 1em;
+  margin-left: 2px;
+  background: var(--magenta);
+  vertical-align: -2px;
+}
+.tagline.typing-done #typedText::after { animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  font-size: 14px; font-weight: 600;
+  text-decoration: none;
+  padding: 13px 26px;
+  border-radius: 999px;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  display: inline-block;
+}
+.btn-primary {
+  background: linear-gradient(90deg, var(--cyan), var(--magenta));
+  color: #0B0E16;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px -8px var(--magenta); }
+.btn-outline { border: 1px solid var(--line); color: var(--text); }
+.btn-outline:hover { border-color: var(--cyan); transform: translateY(-2px); }
+
+/* ============ MAIN ============ */
+main { max-width: 780px; margin: 0 auto; padding: 0 24px 20px; }
+
+.pcb-section { padding: 30px 0; }
+.sec-head { margin-bottom: 20px; }
+.sec-head h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+.sec-underline {
+  width: 46px; height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--cyan), var(--magenta));
+}
+.sec-body { color: var(--text-dim); max-width: 62ch; margin: 0; }
+
+/* ============ EXPERIENCE (numbered — genuinely sequential) ============ */
+.timeline { display: flex; flex-direction: column; gap: 0; }
+.timeline-item { display: flex; gap: 18px; padding-bottom: 30px; position: relative; }
+.timeline-item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 15px; top: 34px; bottom: 0;
+  width: 2px;
+  background: var(--line);
+}
+.timeline-num {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--magenta));
+  color: #0B0E16;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.timeline-content { flex: 1; }
+.timeline-top {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  justify-content: space-between; gap: 6px 16px;
+}
+.timeline-top h3 { font-size: 16px; font-weight: 700; }
+.timeline-date { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); white-space: nowrap; }
+.timeline-org { color: var(--text-dim); font-size: 13.5px; margin: 2px 0 10px; font-weight: 500; }
+.timeline-content ul { margin: 0; padding-left: 18px; color: var(--text-dim); font-size: 14px; }
+.timeline-content li { margin-bottom: 4px; }
+
+/* ============ PROJECTS ============ */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--cyan), var(--magenta)) 1;
+  border-radius: 16px;
+  padding: 20px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.project-card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px -18px var(--magenta); }
+.project-card h3 { font-size: 15.5px; font-weight: 700; margin-bottom: 8px; }
+.project-card p { color: var(--text-dim); font-size: 13.5px; margin: 0 0 14px; }
+
+.stack-row { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0 0 14px; padding: 0; }
+.stack-row li {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: var(--surface-2);
+  color: var(--text-dim);
+}
+.stack-row li:nth-child(odd) { color: var(--cyan); }
+.stack-row li:nth-child(even) { color: var(--magenta); }
+
+.src-link { font-size: 13px; font-weight: 600; text-decoration: none; }
+.src-link { background: linear-gradient(90deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* ============ SKILLS ============ */
+.skills-row { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; margin: 0; padding: 0; }
+.skills-row li {
+  font-size: 13.5px; font-weight: 500;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 9px 16px;
+  border-radius: 20px;
+  transition: border-color .2s ease, transform .2s ease;
+}
+.skills-row li:hover { border-color: var(--cyan); transform: translateY(-2px); }
+
+/* ============ CERTIFICATES ============ */
+.cert-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.cert-list li {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.cert-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--magenta));
+  flex-shrink: 0;
+}
+.cert-text { display: flex; flex-direction: column; gap: 2px; }
+.cert-name { font-weight: 600; font-size: 14.5px; }
+.cert-meta { color: var(--text-dim); font-size: 12.5px; }
+
+/* ============ AWARD ============ */
+.award-ring {
+  padding: 2px;
+  border-radius: 16px;
+  background: linear-gradient(120deg, var(--cyan), var(--magenta));
+}
+.award-row {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 8px 20px;
+  padding: 20px 22px;
+  border-radius: 14px;
+  background: var(--surface);
+}
+.award-name { font-weight: 700; font-size: 15px; }
+.award-meta { color: var(--text-dim); font-size: 13px; }
+
+/* ============ CONTACT ============ */
+.contact-grid { display: grid; gap: 10px; }
+.contact-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 15px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color .2s ease, transform .2s ease;
+  width: 100%;
+  text-align: left;
+}
+.contact-row:hover { border-color: var(--cyan); transform: translateX(3px); }
+.contact-label { font-weight: 600; min-width: 70px; color: var(--text-dim); }
+.contact-value { flex: 1; }
+.copy-hint { font-family: var(--font-mono); font-size: 12px; color: var(--magenta); }
+
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: linear-gradient(90deg, var(--cyan), var(--magenta));
+  color: #0B0E16;
+  font-size: 13px; font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
+  z-index: 200;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ============ FOOTER / BACK TO TOP ============ */
+footer { text-align: center; padding: 28px; color: var(--text-dim); font-size: 13px; border-top: 1px solid var(--line-soft); }
+.to-top {
+  position: fixed; bottom: 24px; right: 24px;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--magenta));
+  color: #0B0E16; border: none; font-size: 18px; cursor: pointer;
+  opacity: 0; visibility: hidden; transform: translateY(10px);
+  transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+  z-index: 90;
+}
+.to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 720px) {
+  .nav-toggle { display: flex; }
+  .nav-links {
+    position: fixed; top: var(--nav-h); right: 0;
+    height: calc(100vh - var(--nav-h)); width: 220px;
+    background: var(--bg);
+    border-left: 1px solid var(--line);
+    flex-direction: column; padding: 28px 24px; gap: 22px;
+    transform: translateX(100%);
+    transition: transform .3s ease;
+  }
+  .nav-links.open { transform: translateX(0); }
+}
+
+a:focus-visible, button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+</style>
 </head>
 <body>
 
-<div class="trace-field" aria-hidden="true"></div>
-
 <nav class="navbar" id="navbar">
   <div class="nav-inner">
-    <a href="#top" class="logo">SM<span>.</span></a>
+    <a href="#top" class="logo gradient-text">Sugapriya.M</a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about" data-nav>About</a></li>
       <li><a href="#experience" data-nav>Experience</a></li>
@@ -43,10 +478,12 @@
 <header class="hero" id="top">
   <div class="hero-inner">
     <div class="hero-avatar">
-      <img src="profile.jpg" alt="Sugapriya Murugesan" onerror="this.parentElement.classList.add('no-img')">
+      <div class="hero-avatar-inner">
+        <img src="profile.jpg" alt="Sugapriya Murugesan" onerror="this.closest('.hero-avatar').classList.add('no-img'); this.remove();">
+      </div>
     </div>
     <p class="kicker">Embedded systems &amp; IoT</p>
-    <h1>Sugapriya Murugesan</h1>
+    <h1 class="gradient-text">Sugapriya Murugesan</h1>
     <ul class="tag-row" aria-label="Focus areas">
       <li>ECE Student</li>
       <li>Embedded Systems</li>
@@ -61,12 +498,24 @@
   </div>
 </header>
 
-<main class="board">
+<div class="waveform" aria-hidden="true">
+  <svg viewBox="0 0 800 28" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="wg1" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#3FD3FF"/>
+        <stop offset="1" stop-color="#C86BFF"/>
+      </linearGradient>
+    </defs>
+    <path d="M0,14 Q20,2 40,14 T80,14 T120,14 T160,14 T200,14 T240,14 T280,14 T320,14 T360,14 T400,14 T440,14 T480,14 T520,14 T560,14 T600,14 T640,14 T680,14 T720,14 T760,14 T800,14" fill="none" stroke="url(#wg1)" stroke-width="1.5"/>
+  </svg>
+</div>
+
+<main>
 
   <section class="pcb-section" id="about">
     <div class="sec-head">
-      <span class="pin">U1</span>
       <h2>About</h2>
+      <div class="sec-underline"></div>
     </div>
     <p class="sec-body">
       I'm an ECE student specializing in embedded systems and data analysis, with additional skills in Java
@@ -77,13 +526,13 @@
 
   <section class="pcb-section" id="experience">
     <div class="sec-head">
-      <span class="pin">U2</span>
       <h2>Experience</h2>
+      <div class="sec-underline"></div>
     </div>
     <div class="timeline">
 
       <div class="timeline-item">
-        <div class="timeline-marker"></div>
+        <div class="timeline-num">1</div>
         <div class="timeline-content">
           <div class="timeline-top">
             <h3>Power BI Intern</h3>
@@ -99,7 +548,7 @@
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-marker"></div>
+        <div class="timeline-num">2</div>
         <div class="timeline-content">
           <div class="timeline-top">
             <h3>Power BI Intern</h3>
@@ -119,53 +568,43 @@
 
   <section class="pcb-section" id="projects">
     <div class="sec-head">
-      <span class="pin">U3</span>
       <h2>Projects</h2>
+      <div class="sec-underline"></div>
     </div>
     <div class="projects-grid">
 
       <article class="project-card">
         <h3>Real-Time Public Transport Tracking System</h3>
         <p>Developed a real-time bus tracking system providing live location, ETA, and SMS updates, improving accessibility and reducing waiting time for passengers.</p>
-        <ul class="stack-row">
-          <li>ESP8266</li><li>GPS</li><li>Firebase</li><li>SIM800L</li>
-        </ul>
+        <ul class="stack-row"><li>ESP8266</li><li>GPS</li><li>Firebase</li><li>SIM800L</li></ul>
         <a href="https://github.com/sugapriya2704/public-transport-tracking-system" target="_blank" rel="noopener" class="src-link">Source code</a>
       </article>
 
       <article class="project-card">
         <h3>IoT-Based Leak Detection &amp; Monitoring System for Industrial Compressed Air Pipelines</h3>
         <p>Built a compressed-air pipeline monitoring system that continuously tracks line pressure using a BMP280 sensor and flags abnormal pressure drops as potential leaks, streaming live readings and alerts to the Blynk app for real-time industrial monitoring.</p>
-        <ul class="stack-row">
-          <li>ESP32</li><li>BMP280</li><li>Blynk</li>
-        </ul>
+        <ul class="stack-row"><li>ESP32</li><li>BMP280</li><li>Blynk</li></ul>
         <a href="https://github.com/sugapriya2704/Iot-based-monitoring-and-leak-dectection-system-for-industrial-compressed-air-pipelines-" target="_blank" rel="noopener" class="src-link">Source code</a>
       </article>
 
       <article class="project-card">
         <h3>IoT Weather Monitoring System</h3>
         <p>Built a system to monitor temperature and humidity in real time with cloud-based visualization.</p>
-        <ul class="stack-row">
-          <li>Arduino</li><li>DHT Sensor</li><li>ESP8266</li><li>ThingSpeak</li>
-        </ul>
+        <ul class="stack-row"><li>Arduino</li><li>DHT Sensor</li><li>ESP8266</li><li>ThingSpeak</li></ul>
         <a href="https://github.com/sugapriya2704/Iot-weather-monitoring-system" target="_blank" rel="noopener" class="src-link">Source code</a>
       </article>
 
       <article class="project-card">
         <h3>Smart Greeting Robot</h3>
         <p>Designed a robot capable of detecting human presence and performing automated greeting actions.</p>
-        <ul class="stack-row">
-          <li>Arduino Uno</li><li>Servo Motors</li>
-        </ul>
+        <ul class="stack-row"><li>Arduino Uno</li><li>Servo Motors</li></ul>
         <a href="https://github.com/sugapriya2704/smart-greeting-mini-robot" target="_blank" rel="noopener" class="src-link">Source code</a>
       </article>
 
       <article class="project-card">
         <h3>Line Follower Robot</h3>
         <p>Developed an autonomous robot that follows a predefined path using sensor-based control.</p>
-        <ul class="stack-row">
-          <li>Arduino Uno</li><li>IR Sensors</li>
-        </ul>
+        <ul class="stack-row"><li>Arduino Uno</li><li>IR Sensors</li></ul>
         <a href="https://github.com/sugapriya2704/Line-Folllower-robot" target="_blank" rel="noopener" class="src-link">Source code</a>
       </article>
 
@@ -174,8 +613,8 @@
 
   <section class="pcb-section" id="skills">
     <div class="sec-head">
-      <span class="pin">U4</span>
       <h2>Skills</h2>
+      <div class="sec-underline"></div>
     </div>
     <ul class="skills-row">
       <li>Embedded Systems</li>
@@ -190,44 +629,58 @@
 
   <section class="pcb-section" id="certificates">
     <div class="sec-head">
-      <span class="pin">U5</span>
       <h2>Certificates</h2>
+      <div class="sec-underline"></div>
     </div>
     <ul class="cert-list">
       <li>
-        <span class="cert-name">Embedded System and IoT</span>
-        <span class="cert-meta">San Technovation &nbsp;·&nbsp; October 2024</span>
+        <span class="cert-dot"></span>
+        <span class="cert-text">
+          <span class="cert-name">Embedded System and IoT</span>
+          <span class="cert-meta">San Technovation · October 2024</span>
+        </span>
       </li>
       <li>
-        <span class="cert-name">Data Visualization Internship</span>
-        <span class="cert-meta">San Technovation &nbsp;·&nbsp; June 2025</span>
+        <span class="cert-dot"></span>
+        <span class="cert-text">
+          <span class="cert-name">Data Visualization Internship</span>
+          <span class="cert-meta">San Technovation · June 2025</span>
+        </span>
       </li>
       <li>
-        <span class="cert-name">9 Days Robotics Workshop</span>
-        <span class="cert-meta">Robomiracle &nbsp;·&nbsp; February 2026</span>
+        <span class="cert-dot"></span>
+        <span class="cert-text">
+          <span class="cert-name">9 Days Robotics Workshop</span>
+          <span class="cert-meta">Robomiracle · February 2026</span>
+        </span>
       </li>
       <li>
-        <span class="cert-name">Smart India Hackathon (SIH) 2025</span>
-        <span class="cert-meta">Velalar College of Engineering and Technology — "Multi-Functional Drone for Emergency and Industrial Uses"</span>
+        <span class="cert-dot"></span>
+        <span class="cert-text">
+          <span class="cert-name">Smart India Hackathon (SIH) 2025</span>
+          <span class="cert-meta">Velalar College of Engineering and Technology — "Multi-Functional Drone for Emergency and Industrial Uses"</span>
+        </span>
       </li>
     </ul>
   </section>
 
   <section class="pcb-section" id="awards">
     <div class="sec-head">
-      <span class="pin">U6</span>
       <h2>Award</h2>
+      <div class="sec-underline"></div>
     </div>
-    <div class="award-row">
-      <span class="award-name">IdeaFest'25 — 3rd Prize, Project Expo</span>
-      <span class="award-meta">Velalar College of Engineering and Technology</span>
+    <div class="award-ring">
+      <div class="award-row">
+        <span class="award-name">IdeaFest'25 — 3rd Prize, Project Expo</span>
+        <span class="award-meta">Velalar College of Engineering and Technology</span>
+      </div>
     </div>
   </section>
 
   <section class="pcb-section" id="contact">
     <div class="sec-head">
-      <span class="pin">U7</span>
       <h2>Contact</h2>
+      <div class="sec-underline"></div>
     </div>
     <div class="contact-grid">
       <button class="contact-row" data-copy="9342852186" type="button">
@@ -257,242 +710,111 @@
 </main>
 
 <footer>
-  <p>&copy; <span id="year"></span> Sugapriya Murugesan. Built board by board.</p>
+  <p>&copy; <span id="year"></span> Sugapriya Murugesan. All rights reserved.</p>
 </footer>
 
 <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
 
-<script src="script.js"></script>
-</body>
-</html>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-<nav class="navbar" id="navbar">
-  <div class="nav-inner">
-    <a href="#top" class="logo">Sugapriya<span>.M</span></a>
+  const themeToggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+  const savedTheme = localStorage.getItem('portfolio-theme');
+  if (savedTheme) {
+    root.setAttribute('data-theme', savedTheme);
+    themeToggle.textContent = savedTheme === 'light' ? '☀️' : '🌙';
+  }
+  themeToggle.addEventListener('click', () => {
+    const isLight = root.getAttribute('data-theme') === 'light';
+    const next = isLight ? 'dark' : 'light';
+    if (next === 'dark') { root.removeAttribute('data-theme'); }
+    else { root.setAttribute('data-theme', 'light'); }
+    themeToggle.textContent = next === 'light' ? '☀️' : '🌙';
+    localStorage.setItem('portfolio-theme', next);
+  });
 
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#about" data-nav>About</a></li>
-      <li><a href="#experience" data-nav>Experience</a></li>
-      <li><a href="#projects" data-nav>Projects</a></li>
-      <li><a href="#skills" data-nav>Skills</a></li>
-      <li><a href="#certificates" data-nav>Certificates</a></li>
-      <li><a href="#awards" data-nav>Awards</a></li>
-      <li><a href="#contact" data-nav>Contact</a></li>
-    </ul>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
 
-    <div class="nav-right">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">🌙</button>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</nav>
+  const sections = document.querySelectorAll('main section[id]');
+  const navAnchors = document.querySelectorAll('[data-nav]');
+  if ('IntersectionObserver' in window) {
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navAnchors.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector(`[data-nav][href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px' });
+    sections.forEach(sec => sectionObserver.observe(sec));
+  }
 
-<header class="hero" id="top">
-  <div class="hero-content">
-    <div class="avatar">
-      <img src="profile.jpg" alt="Sugapriya Murugesan" onerror="this.parentElement.classList.add('no-img')">
-    </div>
-    <p class="eyebrow">Embedded Systems &amp; IoT</p>
-    <h1>Sugapriya Murugesan</h1>
-    <p class="role-line">ECE Student &middot; Embedded Systems &middot; IoT &middot; Java</p>
-    <p class="tagline"><span id="typedText">Building real-world IoT systems and data-driven solutions</span></p>
-    <div class="hero-actions">
-      <a href="#projects" class="btn btn-primary">View Projects</a>
-      <a href="#contact" class="btn btn-ghost">Get In Touch</a>
-    </div>
-  </div>
-</header>
+  const typedEl = document.getElementById('typedText');
+  const taglineWrap = typedEl ? typedEl.closest('.tagline') : null;
+  if (typedEl && taglineWrap && !reduceMotion) {
+    const fullText = typedEl.textContent.trim();
+    typedEl.textContent = '';
+    let i = 0;
+    const type = () => {
+      if (i <= fullText.length) {
+        typedEl.textContent = fullText.slice(0, i);
+        i++;
+        setTimeout(type, 28);
+      } else {
+        taglineWrap.classList.add('typing-done');
+      }
+    };
+    setTimeout(type, 300);
+  } else if (taglineWrap) {
+    taglineWrap.classList.add('typing-done');
+  }
 
-<main>
-<section class="card" id="about">
-  <p class="eyebrow">About</p>
-  <h2>About Me</h2>
-  <p>
-    I'm an ECE student specializing in embedded systems and data analysis, with additional skills in Java
-    programming and Iot. I build real-world solutions involving automation, sensor
-    integration, and data-driven decision making.
-  </p>
-</section>
+  const toast = document.getElementById('toast');
+  let toastTimer;
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const value = btn.getAttribute('data-copy');
+      try {
+        await navigator.clipboard.writeText(value);
+        showToast('Copied: ' + value);
+      } catch (err) {
+        showToast('Copy failed — please copy manually');
+      }
+    });
+  });
 
-<section class="card" id="experience">
-  <p class="eyebrow">Experience</p>
-  <h2>Experience</h2>
-  <div class="experience-container">
+  const toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', () => {
+    toTop.classList.toggle('visible', window.scrollY > 500);
+  }, { passive: true });
+  toTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
 
-    <div class="experience-item">
-      <div class="exp-header">
-        <h3>Power BI Intern</h3>
-        <span class="exp-date">Jan 2026 – Feb 2026</span>
-      </div>
-      <p class="exp-company">CODTECH IT Solutions</p>
-      <ul class="exp-points">
-        <li>Analyzed and organized business data using Power BI, Tableau, and Excel.</li>
-        <li>Designed interactive dashboards and data visualizations to identify key trends.</li>
-        <li>Generated informative reports to support data-driven business decisions.</li>
-      </ul>
-    </div>
-
-    <div class="experience-item">
-      <div class="exp-header">
-        <h3>Power BI Intern</h3>
-        <span class="exp-date">June 2025 – July 2025</span>
-      </div>
-      <p class="exp-company">SAN Technovation Pvt. Ltd., Erode</p>
-      <ul class="exp-points">
-        <li>Created interactive Power BI and Tableau dashboards for business data analysis.</li>
-        <li>Cleaned, prepared, and organized datasets to improve reporting accuracy.</li>
-        <li>Collaborated with team members to enhance dashboard usability and data presentation.</li>
-      </ul>
-    </div>
-
-  </div>
-</section>
-
-<section class="card" id="projects">
-  <p class="eyebrow">Projects</p>
-  <h2>Projects</h2>
-  <div class="projects-container">
-
-    <div class="project">
-      <h3>Real-Time Public Transport Tracking System</h3>
-      <p class="stack">ESP8266 &middot; GPS &middot; Firebase &middot; SIM800L</p>
-      <p>
-        Developed a real-time bus tracking system providing live location, ETA, and SMS updates,
-        improving accessibility and reducing waiting time for passengers.
-      </p>
-      <a href="https://github.com/sugapriya2704/public-transport-tracking-system" target="_blank" class="view-code">View Code &rarr;</a>
-    </div>
-
-    <div class="project ">
-      <h3>IoT-Based Leak Detection &amp; Monitoring System for Industrial Compressed Air Pipelines</h3>
-      <p class="stack">ESP32 &middot; BMP280 Pressure Sensor &middot; Blynk IoT Platform</p>
-      <p>
-        Built a compressed-air pipeline monitoring system that continuously tracks line pressure using
-        a BMP280 sensor and flags abnormal pressure drops as potential leaks, streaming live readings and
-        alerts to the Blynk app for real-time industrial monitoring.
-      </p>
-      <a href="https://github.com/sugapriya2704/Iot-based-monitoring-and-leak-dectection-system-for-industrial-compressed-air-pipelines-" target="_blank" class="view-code">View Code &rarr;</a>
-    </div>
-
-    <div class="project">
-      <h3>IoT Weather Monitoring System</h3>
-      <p class="stack">Arduino &middot; DHT Sensor &middot; ESP8266 &middot; ThingSpeak</p>
-      <p>Built a system to monitor temperature and humidity in real time with cloud-based visualization.</p>
-      <a href="https://github.com/sugapriya2704/Iot-weather-monitoring-system" target="_blank" class="view-code">View Code &rarr;</a>
-    </div>
-
-    <div class="project">
-      <h3>Smart Greeting Robot</h3>
-      <p class="stack">Arduino Uno &middot; Servo Motors</p>
-      <p>Designed a robot capable of detecting human presence and performing automated greeting actions.</p>
-      <a href="https://github.com/sugapriya2704/smart-greeting-mini-robot" target="_blank" class="view-code">View Code &rarr;</a>
-    </div>
-
-    <div class="project">
-      <h3>Line Follower Robot</h3>
-      <p class="stack">Arduino Uno &middot; IR Sensors</p>
-      <p>Developed an autonomous robot that follows a predefined path using sensor-based control.</p>
-      <a href="https://github.com/sugapriya2704/Line-Folllower-robot" target="_blank" class="view-code">View Code &rarr;</a>
-    </div>
-
-  </div>
-</section>
-
-<section class="card" id="skills">
-  <p class="eyebrow">Skills</p>
-  <h2>Skills</h2>
-  <ul class="skills">
-    <li>Embedded Systems</li>
-    <li>Data visualization</li>
-    <li>C Programming</li>
-    <li>Java</li>
-    <li>IoT</li>
-    <li>HTML</li>
-    <li>SQL(Basic)</li>
-  </ul>
-</section>
-
-<section class="card" id="certificates">
-  <p class="eyebrow">Certificates</p>
-  <h2>Certificates</h2>
-  <div class="certs-container">
-
-    <div class="cert-card">
-      <h3>🔧 Embedded System and IoT</h3>
-      <p class="cert-meta">San Technovation &middot; October 2024</p>
-    </div>
-
-    <div class="cert-card">
-      <h3>📊 Data Visualization Internship</h3>
-      <p class="cert-meta">San Technovation &middot; June 2025</p>
-    </div>
-
-    <div class="cert-card">
-      <h3>🤖 9 Days Robotics Workshop</h3>
-      <p class="cert-meta">Robomiracle &middot; February 2026</p>
-    </div>
-
-    <div class="cert-card">
-      <h3>🚁 Smart India Hackathon (SIH) 2025</h3>
-      <p class="cert-meta">Velalar College of Engineering and Technology &middot; "Multi-Functional Drone for Emergency and Industrial Uses"</p>
-    </div>
-
-  </div>
-</section>
-
-<section class="card" id="awards">
-  <p class="eyebrow">Award</p>
-  <h2>Award</h2>
-  <div class="award-container">
-    <div class="award-item">
-      <h3>🏆 IdeaFest'25 — 3rd Prize (Project Expo)</h3>
-      <p class="award-meta">Velalar College of Engineering and Technology</p>
-    </div>
-  </div>
-</section>
-
-<section class="card contact" id="contact">
-  <p class="eyebrow">Contact</p>
-  <h2>Contact</h2>
-  <div class="contact-grid">
-    <button class="contact-row" data-copy="9342852186" type="button">
-      <span class="contact-label">Phone</span>
-      <span class="contact-value">9342852186</span>
-      <span class="copy-hint">Copy</span>
-    </button>
-    <button class="contact-row" data-copy="sugapriya2704@gmail.com" type="button">
-      <span class="contact-label">Email</span>
-      <span class="contact-value">sugapriya2704@gmail.com</span>
-      <span class="copy-hint">Copy</span>
-    </button>
-    <a class="contact-row" href="https://github.com/sugapriya2704" target="_blank" rel="noopener">
-      <span class="contact-label">GitHub</span>
-      <span class="contact-value">github.com/sugapriya2704</span>
-      <span class="copy-hint">Open</span>
-    </a>
-    <a class="contact-row" href="https://www.linkedin.com/in/sugapriya-murugesan" target="_blank" rel="noopener">
-      <span class="contact-label">LinkedIn</span>
-      <span class="contact-value">linkedin.com/in/sugapriya-murugesan</span>
-      <span class="copy-hint">Open</span>
-    </a>
-  </div>
-  <div class="toast" id="toast">Copied to clipboard</div>
-</section>
-</main>
-
-<footer>
-  <p>&copy; <span id="year"></span> Sugapriya Murugesan. All rights reserved.</p>
-</footer>
-
-<button class="to-top" id="toTop" aria-label="Back to top">&uarr;</button>
-
-<script src="script.js"></script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+});
+</script>
 </body>
 </html>
