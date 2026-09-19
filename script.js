@@ -51,21 +51,27 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, { rootMargin: '-40% 0px -50% 0px' });
     sections.forEach(sec => sectionObserver.observe(sec));
+  }
 
-    /* ---------- SCROLL REVEAL (progressive enhancement) ---------- */
-    if (!reduceMotion) {
-      const revealTargets = document.querySelectorAll('.card, .project');
-      revealTargets.forEach(t => t.classList.add('reveal-ready'));
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1 });
-      revealTargets.forEach(t => revealObserver.observe(t));
-    }
+  /* ---------- HERO TAGLINE TYPING (single orchestrated moment) ---------- */
+  const typedEl = document.getElementById('typedText');
+  const taglineWrap = typedEl ? typedEl.closest('.tagline') : null;
+  if (typedEl && taglineWrap && !reduceMotion) {
+    const fullText = typedEl.textContent.trim();
+    typedEl.textContent = '';
+    let i = 0;
+    const type = () => {
+      if (i <= fullText.length) {
+        typedEl.textContent = fullText.slice(0, i);
+        i++;
+        setTimeout(type, 28);
+      } else {
+        taglineWrap.classList.add('typing-done');
+      }
+    };
+    setTimeout(type, 300);
+  } else if (taglineWrap) {
+    taglineWrap.classList.add('typing-done');
   }
 
   /* ---------- COPY TO CLIPBOARD ---------- */
