@@ -145,12 +145,85 @@ main{max-width:1080px;margin:auto;padding:20px 24px 60px}
 .src:hover{color:var(--cyan)}
 
 /* SKILLS */
-.skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.skill{padding:17px 19px;border-radius:16px}
-.skill-head{display:flex;justify-content:space-between;font-size:13px;margin-bottom:9px}
-.skill-head span:last-child{color:var(--cyan);font-family:var(--mono);font-size:11px}
-.bar{height:7px;border-radius:10px;background:var(--surface2);overflow:hidden}
-.bar i{display:block;height:100%;width:0;border-radius:10px;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+.skill-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+.skill-card{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  min-height:105px;
+  padding:20px;
+  border-radius:18px;
+  overflow:hidden;
+  transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease;
+}
+.skill-card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:3px;
+  height:100%;
+  background:linear-gradient(180deg,var(--cyan),var(--purple));
+  transform:scaleY(.25);
+  transform-origin:center;
+  transition:transform .35s ease;
+}
+.skill-card::after{
+  content:"";
+  position:absolute;
+  width:120px;
+  height:120px;
+  right:-70px;
+  top:-70px;
+  border-radius:50%;
+  background:var(--cyan);
+  opacity:.07;
+  filter:blur(18px);
+  transition:.35s ease;
+}
+.skill-card:hover{
+  transform:translateY(-7px);
+  border-color:rgba(63,211,255,.38);
+  box-shadow:0 18px 45px rgba(0,0,0,.25);
+}
+.skill-card:hover::before{transform:scaleY(1)}
+.skill-card:hover::after{transform:scale(1.8);opacity:.13}
+.skill-icon{
+  width:50px;
+  height:50px;
+  flex:none;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:linear-gradient(135deg,rgba(63,211,255,.14),rgba(184,108,255,.16));
+  border:1px solid var(--line);
+  color:var(--cyan);
+  font:700 17px var(--mono);
+  transition:transform .35s ease,box-shadow .35s ease;
+}
+.skill-card:hover .skill-icon{
+  transform:rotate(-5deg) scale(1.08);
+  box-shadow:0 0 24px rgba(63,211,255,.14);
+}
+.skill-card h3{
+  position:relative;
+  z-index:1;
+  margin:0 0 5px;
+  font:700 15px var(--display);
+}
+.skill-card p{
+  position:relative;
+  z-index:1;
+  margin:0;
+  color:var(--muted);
+  font-size:11.5px;
+  line-height:1.55;
+}
 
 /* CERTS / AWARD / CONTACT */
 .cert-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;list-style:none;margin:0;padding:0}
@@ -294,14 +367,77 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--line);color:var
 </section>
 
 <section class="section" id="skills">
-  <div class="sec-head"><div><h2 class="sec-title">Technical <span>Skills</span></h2><div class="sec-underline"></div></div></div>
+  <div class="sec-head">
+    <div>
+      <h2 class="sec-title">Technical <span>Skills</span></h2>
+      <div class="sec-underline"></div>
+    </div>
+  </div>
+
   <div class="skill-grid">
-    <div class="skill glass"><div class="skill-head"><b>Embedded Systems</b><span>90%</span></div><div class="bar"><i data-width="90%"></i></div></div>
-    <div class="skill glass"><div class="skill-head"><b>IoT</b><span>88%</span></div><div class="bar"><i data-width="88%"></i></div></div>
-    <div class="skill glass"><div class="skill-head"><b>C Programming</b><span>82%</span></div><div class="bar"><i data-width="82%"></i></div></div>
-    <div class="skill glass"><div class="skill-head"><b>Java</b><span>75%</span></div><div class="bar"><i data-width="75%"></i></div></div>
-    <div class="skill glass"><div class="skill-head"><b>Data Visualization</b><span>85%</span></div><div class="bar"><i data-width="85%"></i></div></div>
-    <div class="skill glass"><div class="skill-head"><b>SQL</b><span>65%</span></div><div class="bar"><i data-width="65%"></i></div></div>
+    <div class="skill-card glass">
+      <div class="skill-icon">⚙️</div>
+      <div>
+        <h3>Embedded Systems</h3>
+        <p>Microcontrollers, sensors, Arduino, ESP32 & ESP8266</p>
+      </div>
+    </div>
+
+    <div class="skill-card glass">
+      <div class="skill-icon">📡</div>
+      <div>
+        <h3>IoT</h3>
+        <p>Cloud monitoring, Blynk, Firebase, ThingSpeak & IoT communication</p>
+      </div>
+    </div>
+
+    <div class="skill-card glass">
+      <div class="skill-icon">&lt;/&gt;</div>
+      <div>
+        <h3>C Programming</h3>
+        <p>Programming fundamentals, logic building & embedded C basics</p>
+      </div>
+    </div>
+
+    <div class="skill-card glass">
+      <div class="skill-icon">☕</div>
+      <div>
+        <h3>Java</h3>
+        <p>Core Java, object-oriented programming & application development</p>
+      </div>
+    </div>
+
+    <div class="skill-card glass">
+      <div class="skill-icon">📊</div>
+      <div>
+        <h3>Data Visualization</h3>
+        <p>Power BI, Tableau, Excel dashboards & data presentation</p>
+      </div>
+    </div>
+
+    <div class="skill-card glass">
+      <div class="skill-icon">🗄️</div>
+      <div>
+        <h3>SQL</h3>
+        <p>Basic queries, data retrieval, filtering & database fundamentals</p>
+      </div>
+    </div>
+
+    <div class="skill-card glass">
+      <div class="skill-icon">🔌</div>
+      <div>
+        <h3>PCB Design</h3>
+        <p>Schematic design, PCB fundamentals & electronics hardware</p>
+      </div>
+    </div>
+
+    <div class="skill-card glass">
+      <div class="skill-icon">🌐</div>
+      <div>
+        <h3>Web Technologies</h3>
+        <p>HTML, CSS and JavaScript for interactive interfaces</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -381,7 +517,6 @@ document.addEventListener("DOMContentLoaded",()=>{
     entries.forEach(e=>{
       if(e.isIntersecting){
         e.target.classList.add("in-view");
-        e.target.querySelectorAll(".bar i").forEach(b=>b.style.width=b.dataset.width);
         observer.unobserve(e.target);
       }
     })
